@@ -1,68 +1,90 @@
 import React, { useState } from 'react';
-import { Lock, Mail } from 'lucide-react';
+import { Lock, Mail, ChevronRight, Fingerprint } from 'lucide-react';
 
-interface LoginProps {
-  onLogin: (userData: { name: string; email: string }) => void;
-}
-
-export default function LoginPage({ onLogin }: LoginProps) {
-  const [email, setEmail] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onLogin({ name: "Utilisateur Famille", email });
-  };
+export default function LoginPage({ onLogin }: any) {
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div className="flex min-h-screen w-screen items-center justify-center bg-gray-100 font-sans">
-      <div className="w-full max-w-md bg-white p-10 rounded-3xl shadow-2xl border border-gray-100">
-        
-        {/* Header */}
-        <div className="flex flex-col items-center mb-8">
-          <div className="bg-blue-600 p-4 rounded-2xl shadow-lg shadow-blue-200 mb-4">
-            <Lock className="text-white" size={32} />
-          </div>
-          <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight">Bienvenue</h1>
-          <p className="text-gray-500 mt-2 text-center">Connectez-vous pour gérer vos achats familiaux</p>
-        </div>
+    <div className="flex min-h-screen w-full items-center justify-center bg-[#0f172a] font-sans p-6">
+      {/* Sphères de lumière en arrière-plan pour le relief */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-600/20 rounded-full blur-[120px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600/20 rounded-full blur-[120px]" />
 
-        {/* Formulaire */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="relative">
-            <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Adresse Email</label>
-            <div className="relative group">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={20} />
-              <input 
-                type="email" 
-                required
-                placeholder="papa@famille.com"
-                className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+      <div className="relative w-full max-w-[420px]">
+        {/* Carte Principale */}
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl">
+          
+          {/* Logo / Icon */}
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-blue-500 rounded-2xl blur-lg opacity-40"></div>
+              <div className="relative bg-gradient-to-br from-blue-500 to-indigo-600 p-4 rounded-2xl">
+                <Fingerprint className="text-white" size={32} />
+              </div>
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Mot de passe</label>
-            <input 
-              type="password" 
-              required
-              placeholder="••••••••"
-              className="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
-            />
+          <h2 className="text-white text-3xl font-bold text-center mb-2">Authentification</h2>
+          <p className="text-slate-400 text-center text-sm mb-10">Accédez à votre espace Génie Logiciel</p>
+
+          <form className="space-y-4">
+            <div className="space-y-1">
+              <div className="relative group">
+                <input 
+                  type="email" 
+                  placeholder="Email"
+                  className="w-full bg-slate-800/50 border border-slate-700 text-white pl-12 pr-4 py-4 rounded-2xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-500"
+                />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors" size={20} />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <div className="relative group">
+                <input 
+                  type="password" 
+                  placeholder="Mot de passe"
+                  className="w-full bg-slate-800/50 border border-slate-700 text-white pl-12 pr-4 py-4 rounded-2xl focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all placeholder:text-slate-500"
+                />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors" size={20} />
+              </div>
+            </div>
+
+            <div className="flex justify-end py-1">
+              <button type="button" className="text-xs text-blue-400 hover:text-blue-300 font-medium transition-colors">
+                Identifiants oubliés ?
+              </button>
+            </div>
+
+            <button 
+              type="submit"
+              className="w-full relative group mt-4"
+            >
+              <div className="absolute inset-0 bg-blue-600 rounded-2xl blur group-hover:blur-md transition-all opacity-50"></div>
+              <div className="relative bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 transition-all">
+                Se connecter
+                <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </div>
+            </button>
+          </form>
+
+          {/* Séparateur */}
+          <div className="flex items-center my-8">
+            <div className="flex-1 h-[1px] bg-slate-700"></div>
+            <span className="px-4 text-slate-500 text-xs font-bold uppercase tracking-widest">OU</span>
+            <div className="flex-1 h-[1px] bg-slate-700"></div>
           </div>
 
-          <button 
-            type="submit" 
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-xl shadow-blue-200 transform transition-all active:scale-95"
-          >
-            Se connecter
+          <button className="w-full py-4 border border-slate-700 rounded-2xl text-slate-300 font-medium hover:bg-white/5 transition-all flex items-center justify-center gap-3">
+             <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5 h-5" alt="Google" />
+             Continuer avec Google
           </button>
-        </form>
-
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
-          <span className="text-sm text-gray-400 font-medium italic">Génie Logiciel 2026</span>
         </div>
+
+        {/* Badge de version en bas */}
+        <p className="text-center mt-8 text-slate-500 text-xs font-mono uppercase tracking-[0.3em]">
+          Core System v2.0.26
+        </p>
       </div>
     </div>
   );
