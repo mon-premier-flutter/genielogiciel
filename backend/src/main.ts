@@ -4,12 +4,17 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // Active le CORS pour que ton React puisse appeler l'API
+  // 1. Active le CORS pour ton React (Port 5173 par défaut)
   app.enableCors();
+
+  // 2. Optionnel : Ajoute un préfixe /api (ex: http://localhost:3000/api/users)
+  app.setGlobalPrefix('api');
   
-  // Important pour Vercel : écouter sur le port fourni par l'environnement ou 3000
-  await app.listen(process.env.PORT || 3000);
+  // 3. Écoute sur le port 3000 ou celui de l'hébergeur
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  
+  console.log(`🚀 Backend lancé sur : http://localhost:${port}/api`);
 }
 
-// On ne lance bootstrap que si on n'est pas en mode "Serverless" (optionnel mais propre)
 bootstrap();
